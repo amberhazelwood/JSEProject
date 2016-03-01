@@ -1,0 +1,133 @@
+---
+title: "Identifying Handwriting Based on Gender"
+author: "Name:"
+date: "`r Sys.Date()`"
+bibliography: CopyOfhandwriting.bib
+output: html_document
+---
+
+##Can You Correctly Identify Gender from a Sample of Handwriting?
+
+To test this, we will use a sample data set where students attempted to identify an individual's gender based on a sample of his/her handwriting.  The article Handwiring and Gender: A multi-use data set provided the data set which contains data on 203 students completing the handwriting survey twice (@bradley_handwriting_2015).
+
+First, read in the data using the links the article provided.
+
+```{r}
+#this code reads the data in to RStudio as csv files and then shows the first six rows of the data frame
+site1 <- "http://www.amstat.org/publications/jse/v23n1/bradley/HandwritingSurveyData.csv"
+hw <- read.csv(file=site1,head=TRUE,na.strings="")
+head(hw)
+site <- "http://www.amstat.org/publications/jse/v23n1/bradley/HandwritingSummaryData.csv"
+hwf <- read.csv(file=site, head=TRUE, na.strings="")
+head(hwf)
+summhw <- hwf[, -(9:10)]
+head(summhw)
+```
+
+Once you have the data read in, create histograms of the student survey scores from Survey 1 and Survey 2. Use the ggplot and gridextra package.
+
+```{r,eval=FALSE}
+library(ggplot2)
+library(gridExtra)
+p1<- ggplot(data = , aes()) +
+  geom_histogram(binwidth = 5, fill= "", color = "")+
+  theme_bw()
+p2<- ggplot(data = , aes()) +
+  geom_histogram(binwidth = 5, fill= "", color = "")+
+  theme_bw()  
+grid.arrange(p1,p2,ncol=2)
+```
+
+1. What are any similarities or differences you see in the distributions of Survey 1 scores and Survey 2 scores? (Be sure to mention shape, spread, and center).
+
+
+
+2. What are possible reasons for differences in distributions between the two?
+
+
+
+3. Define the center in the context of the data.
+
+
+
+
+4. What would you expect the center to be if people had no ability to identify gender based on handwriting?
+
+
+
+
+5. State the null and alternative hypothesis for the probability of correctly identifying gender based on handwriting (in both symbols and words).
+
+
+
+
+6. To determine whether or not people can correctly identify gender based on handwriting, we need to know the probability of correctly identifying a handwriting sample. How can we simulate identifying handwriting samples several times to estimate the probability?
+
+
+
+
+
+To simulate identifying 25 handwriting samples several times, we can flip a coin 25 times and repeat this process several times. If people have no ability to correctly identify gender based on handwriting, then the probability of correctly identifying gender would be the same as flipping heads or tails on a coin (50/50).
+
+
+
+
+Using `R`, run a simulation of flipping a coin 25 times and repeat this 5000 times.
+
+Below is some helpful coding hints:
+
+```{r, eval=FALSE}
+#let 1 represent heads and 0 represent tails
+flipsum <- numeric(number of trials)
+for(i in 1:number of trails){
+  cointoss <- sample(c(0,1),# of coinflips, replace=TRUE)
+  flipsum[i] <- sum(cointoss)/25
+}
+```
+
+7. In the code above, what is sum(cointoss)/25 calculating?
+
+
+Now graph the results of your simulation using a density plot.
+
+
+
+```{r,eval=FALSE}
+library(ggplot2)
+DF <- data.frame(flipsum)
+ggplot(data = DF, aes(x= flipsum)) +
+  geom_density(fill = "")
+```
+
+8. How does the distribution of the simulation compare to the distributions of the Survey 1 and Survey 2 scores?
+
+
+
+
+9. By averaging the average of scores of Survey 1 and Survey 2, the average correct score on a survey was 64%, or 16/25 questions answered correctly.
+
+
+
+
+Use the simulation to determine how many times a coin flip resulted in heads 64% of the time or higher out of 25 tosses. (Hint: sum(flipsum>=?)).
+
+
+Now divide this number by the total number of simulations. This is the p-value for flipping heads on a coin 16 or more times out of 25. 
+
+
+10. Interpret the p-value in the context of our problem (handwriting and gender).
+
+
+
+
+11. Based on the p-value, would you reject or fail to reject the null hypothesis from number 5?
+
+
+
+
+12. Compare this simulated value to the actual p-value. Are they similar? Would you draw the same conclusions from number 11?
+
+
+
+
+##References
